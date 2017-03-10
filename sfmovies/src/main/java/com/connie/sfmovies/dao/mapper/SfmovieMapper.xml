@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.connie.sfmovies.dao.mapper.SfmovieMapper" >
+  <resultMap id="BaseResultMap" type="com.connie.sfmovies.dto.Sfmovie" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="releaseyear" property="releaseyear" jdbcType="VARCHAR" />
+    <result column="locations" property="locations" jdbcType="VARCHAR" />
+    <result column="funfacts" property="funfacts" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="distributor" property="distributor" jdbcType="VARCHAR" />
+    <result column="director" property="director" jdbcType="VARCHAR" />
+    <result column="writer" property="writer" jdbcType="VARCHAR" />
+    <result column="actor1" property="actor1" jdbcType="VARCHAR" />
+    <result column="actor2" property="actor2" jdbcType="VARCHAR" />
+    <result column="actor3" property="actor3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, releaseyear, locations, funfacts, company, distributor, director, writer, 
+    actor1, actor2, actor3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.connie.sfmovies.dto.SfmovieExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_sfmovies
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sfmovies
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_sfmovies
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.connie.sfmovies.dto.SfmovieExample" >
+    delete from tb_sfmovies
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.connie.sfmovies.dto.Sfmovie" >
+    insert into tb_sfmovies (id, title, releaseyear, 
+      locations, funfacts, company, 
+      distributor, director, writer, 
+      actor1, actor2, actor3
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{releaseyear,jdbcType=VARCHAR}, 
+      #{locations,jdbcType=VARCHAR}, #{funfacts,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{distributor,jdbcType=VARCHAR}, #{director,jdbcType=VARCHAR}, #{writer,jdbcType=VARCHAR}, 
+      #{actor1,jdbcType=VARCHAR}, #{actor2,jdbcType=VARCHAR}, #{actor3,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.connie.sfmovies.dto.Sfmovie" >
+    insert into tb_sfmovies
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="releaseyear != null" >
+        releaseyear,
+      </if>
+      <if test="locations != null" >
+        locations,
+      </if>
+      <if test="funfacts != null" >
+        funfacts,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="distributor != null" >
+        distributor,
+      </if>
+      <if test="director != null" >
+        director,
+      </if>
+      <if test="writer != null" >
+        writer,
+      </if>
+      <if test="actor1 != null" >
+        actor1,
+      </if>
+      <if test="actor2 != null" >
+        actor2,
+      </if>
+      <if test="actor3 != null" >
+        actor3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseyear != null" >
+        #{releaseyear,jdbcType=VARCHAR},
+      </if>
+      <if test="locations != null" >
+        #{locations,jdbcType=VARCHAR},
+      </if>
+      <if test="funfacts != null" >
+        #{funfacts,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="distributor != null" >
+        #{distributor,jdbcType=VARCHAR},
+      </if>
+      <if test="director != null" >
+        #{director,jdbcType=VARCHAR},
+      </if>
+      <if test="writer != null" >
+        #{writer,jdbcType=VARCHAR},
+      </if>
+      <if test="actor1 != null" >
+        #{actor1,jdbcType=VARCHAR},
+      </if>
+      <if test="actor2 != null" >
+        #{actor2,jdbcType=VARCHAR},
+      </if>
+      <if test="actor3 != null" >
+        #{actor3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.connie.sfmovies.dto.SfmovieExample" resultType="java.lang.Integer" >
+    select count(*) from tb_sfmovies
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_sfmovies
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.releaseyear != null" >
+        releaseyear = #{record.releaseyear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locations != null" >
+        locations = #{record.locations,jdbcType=VARCHAR},
+      </if>
+      <if test="record.funfacts != null" >
+        funfacts = #{record.funfacts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.company != null" >
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distributor != null" >
+        distributor = #{record.distributor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.director != null" >
+        director = #{record.director,jdbcType=VARCHAR},
+      </if>
+      <if test="record.writer != null" >
+        writer = #{record.writer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actor1 != null" >
+        actor1 = #{record.actor1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actor2 != null" >
+        actor2 = #{record.actor2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actor3 != null" >
+        actor3 = #{record.actor3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_sfmovies
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      releaseyear = #{record.releaseyear,jdbcType=VARCHAR},
+      locations = #{record.locations,jdbcType=VARCHAR},
+      funfacts = #{record.funfacts,jdbcType=VARCHAR},
+      company = #{record.company,jdbcType=VARCHAR},
+      distributor = #{record.distributor,jdbcType=VARCHAR},
+      director = #{record.director,jdbcType=VARCHAR},
+      writer = #{record.writer,jdbcType=VARCHAR},
+      actor1 = #{record.actor1,jdbcType=VARCHAR},
+      actor2 = #{record.actor2,jdbcType=VARCHAR},
+      actor3 = #{record.actor3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.connie.sfmovies.dto.Sfmovie" >
+    update tb_sfmovies
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseyear != null" >
+        releaseyear = #{releaseyear,jdbcType=VARCHAR},
+      </if>
+      <if test="locations != null" >
+        locations = #{locations,jdbcType=VARCHAR},
+      </if>
+      <if test="funfacts != null" >
+        funfacts = #{funfacts,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="distributor != null" >
+        distributor = #{distributor,jdbcType=VARCHAR},
+      </if>
+      <if test="director != null" >
+        director = #{director,jdbcType=VARCHAR},
+      </if>
+      <if test="writer != null" >
+        writer = #{writer,jdbcType=VARCHAR},
+      </if>
+      <if test="actor1 != null" >
+        actor1 = #{actor1,jdbcType=VARCHAR},
+      </if>
+      <if test="actor2 != null" >
+        actor2 = #{actor2,jdbcType=VARCHAR},
+      </if>
+      <if test="actor3 != null" >
+        actor3 = #{actor3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.connie.sfmovies.dto.Sfmovie" >
+    update tb_sfmovies
+    set title = #{title,jdbcType=VARCHAR},
+      releaseyear = #{releaseyear,jdbcType=VARCHAR},
+      locations = #{locations,jdbcType=VARCHAR},
+      funfacts = #{funfacts,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      distributor = #{distributor,jdbcType=VARCHAR},
+      director = #{director,jdbcType=VARCHAR},
+      writer = #{writer,jdbcType=VARCHAR},
+      actor1 = #{actor1,jdbcType=VARCHAR},
+      actor2 = #{actor2,jdbcType=VARCHAR},
+      actor3 = #{actor3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="map">
+   select
+    <include refid="Base_Column_List" />
+    from tb_sfmovies
+    <where>
+    	<if test="Sfmovie.title != null and Sfmovie.title != '' ">
+    	and title like concat('%',#{Sfmovie.title},'%')
+    	</if>
+    	<if test="Sfmovie.locations != null and Sfmovie.locations != '' ">
+    	and locations like concat('%',#{Sfmovie.locations},'%')
+    	</if>
+    	<if test="Sfmovie.director != null and Sfmovie.director != '' ">
+    	and director like concat('%',#{Sfmovie.director},'%')
+    	</if>
+    	<if test="Sfmovie.actor1 != null and Sfmovie.actor1 != '' ">
+    	and actor1 like concat('%',#{Sfmovie.actor1},'%')
+    	</if>
+    	<if test="Sfmovie.actor2 != null and Sfmovie.actor2 != '' ">
+    	and actor2 like concat('%',#{Sfmovie.actor2},'%')
+    	</if>
+    	<if test="Sfmovie.actor3 != null and Sfmovie.actor3 != '' ">
+    	and actor3 like concat('%',#{Sfmovie.actor3},'%')
+    	</if>
+    </where>
+  </select>
+</mapper>
